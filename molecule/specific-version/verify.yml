@@ -1,0 +1,16 @@
+---
+
+- name: Verify
+  hosts: all
+
+  tasks:
+    - name: Check current kops version
+      command: "kops version --short"
+      register: kops_current_version
+      changed_when: false
+      failed_when: false
+
+    - name: Ensure kops version output contains correct version string
+      assert:
+        that:
+          - '"1.22.4" in kops_current_version.stdout'

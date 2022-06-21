@@ -1,0 +1,14 @@
+---
+- name: Verify
+  hosts: all
+
+  tasks:
+    - name: Check current kops version
+      command: "kops version --short"
+      register: kops_current_version
+      failed_when: false
+
+    - name: Ensure kops not installed
+      assert:
+        that:
+          - "kops_current_version.rc != 0"

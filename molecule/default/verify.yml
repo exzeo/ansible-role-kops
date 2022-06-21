@@ -1,0 +1,19 @@
+---
+
+- name: Verify
+  hosts: all
+
+  tasks:
+    - name: Check current kops version
+      command: "kops version --short"
+      register: kops_current_version
+
+    - name: Get Latest Version
+      uri:
+        url: "https://api.github.com/repos/kubernetes/kops/releases/latest"
+      register: kops_latest_info
+
+    - name: Ensure kops version output contains correct version string
+      assert:
+        that:
+          - 'kops_current_version.stdout in kops_latest_info.json.tag_name'
