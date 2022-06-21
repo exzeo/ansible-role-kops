@@ -1,6 +1,6 @@
 ---
 
 - name: Uninstall Kops
-  file:
+  ansible.builtin.file:
     state: absent
     path: "{{ kops_bin_directory }}/kops"

@@ -1,12 +1,12 @@
 ---
 - name: Check current kops version
-  command: "kops version --short"
+  ansible.builtin.command: "kops version --short"
   register: kops_current_version
   changed_when: false
   failed_when: false
 
 - name: Get Latest Version
-  uri:
+  ansible.builtin.uri:
     url: "{{ kops_latest_url }}"
   register: kops_latest_info
   changed_when: false
@@ -15,12 +15,12 @@
   when: kops_version|length == 0
 
 - name: Set Latest Version # noqa no-handler
-  set_fact:
+  ansible.builtin.set_fact:
     kops_version: "{{ kops_latest_info.json.tag_name | replace('v','') }}"
   when: kops_version|length == 0
 
 - name: Download kops
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ kops_download_url }}"
     dest: "{{ kops_bin_directory }}/kops"
     mode: 0755
