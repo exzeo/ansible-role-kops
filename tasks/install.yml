@@ -1,0 +1,33 @@
+---
+- name: Check current kops version
+  command: "kops version --short"
+  register: kops_current_version
+  changed_when: false
+  failed_when: false
+
+- name: Get Latest Version
+  uri:
+    url: "{{ kops_latest_url }}"
+  register: kops_latest_info
+  changed_when: false
+  retries: 5
+  delay: 2
+  when: kops_version|length == 0
+
+- name: Set Latest Version # noqa no-handler
+  set_fact:
+    kops_version: "{{ kops_latest_info.json.tag_name | replace('v','') }}"
+  when: kops_version|length == 0
+
+- name: Download kops
+  get_url:
+    url: "{{ kops_download_url }}"
+    dest: "{{ kops_bin_directory }}/kops"
+    mode: 0755
+    force: yes
+  retries: 5
+  delay: 2
+  when: >
+    (kops_current_version.rc != 0) or
+    (kops_version|length > 0 and kops_version not in kops_current_version.stdout) or
+    (kops_version|length == 0 and kops_current_version.stdout not in kops_latest_info.json.tag_name)

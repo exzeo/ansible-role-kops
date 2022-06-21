@@ -1,0 +1,11 @@
+---
+
+# Version of 'kops' to install, defaults to latest version
+# kops_version: "1.22.4"
+kops_version: ""
+
+# Toggling this will uninstall from the server
+uninstall: false
+
+# Where to install "kops" binary
+kops_bin_directory: "/usr/local/bin"

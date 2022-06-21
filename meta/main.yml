@@ -1,0 +1,39 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: kops
+  author: exzeo
+  description: Ansible Role for installing kops
+  company: "Exzeo"
+  license: MIT
+  min_ansible_version: "2.1"
+  namespace: exzeo
+
+  platforms:
+  - name: Ubuntu
+    versions:
+      - xenial
+      - bionic
+      - focal
+      - hirsute
+      - impish
+      - jammy
+  - name: Debian
+    versions:
+      - stretch
+      - buster
+      - bullseye
+      - bookworm
+
+  galaxy_tags:
+    - kops
+    - kubernetes
+    - aws
+    - k8s
+    - cluster
+    - cli
+    - cloud
+    - infrastructure
+    - amazon
+    - system
